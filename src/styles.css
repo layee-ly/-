@@ -536,6 +536,116 @@ button {
   height: 12%;
 }
 
+.about-view {
+  position: relative;
+  z-index: 1;
+  min-height: 1100px;
+  padding: 101px 0 96px;
+  overflow: hidden;
+  color: #333;
+  background: #f8f8f6 url("/optimized/images/homepage-background.webp") center top / 100% auto no-repeat;
+}
+
+.about-ruler {
+  z-index: 2;
+  right: 14.3%;
+}
+
+.about-content {
+  position: relative;
+  z-index: 3;
+  width: calc(100% - 96px);
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+.about-row {
+  display: grid;
+  grid-template-columns: 34% 66%;
+  align-items: start;
+  padding-left: 18%;
+}
+
+.about-row h1,
+.about-row h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  color: #333;
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.about-row h1 > span,
+.about-row h2 > span {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  border: 1.5px solid var(--coral);
+  border-radius: 50%;
+}
+
+.about-row h1 em,
+.about-row h2 em {
+  margin-left: 3px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.about-copy {
+  max-width: 710px;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.about-copy p {
+  margin: 0;
+}
+
+.about-contact-copy {
+  line-height: 1.45;
+}
+
+.about-profile {
+  margin-top: 83px;
+}
+
+.about-profile .about-copy p + p {
+  margin-top: 4px;
+}
+
+.about-work {
+  margin-top: 96px;
+}
+
+.about-work-copy {
+  display: grid;
+  gap: 18px;
+}
+
+.about-projects {
+  margin-top: 96px;
+}
+
+.about-project-list {
+  display: grid;
+  gap: 22px;
+}
+
+.about-project-list p {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+}
+
+.about-project-list time {
+  white-space: nowrap;
+}
+
 .project-detail-view {
   position: relative;
   z-index: 2;

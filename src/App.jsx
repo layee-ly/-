@@ -543,6 +543,7 @@ const projectDetails = {
 }
 
 function getCurrentView() {
+  if (window.location.hash === '#/about') return 'about'
   const projectKey = window.location.hash.replace('#/project/', '')
   return projectDetails[projectKey] ? projectKey : 'home'
 }
@@ -588,6 +589,65 @@ const assetVersion = '20260721-31'
   )
 }
 
+function AboutView() {
+  return (
+    <main className="about-view" id="top">
+      <div className="about-content">
+        <section className="about-row about-contact" aria-labelledby="about-contact-title">
+          <h1 id="about-contact-title">
+            <span aria-hidden="true" />
+            联系方式
+            <em>Contact</em>
+          </h1>
+          <div className="about-copy about-contact-copy">
+            <p>联系电话：<a href="tel:13681957917">13681957917</a></p>
+            <p>Wechat：J2967613478</p>
+            <p>Email：<a href="mailto:2967613478@qq.com">2967613478@qq.com</a></p>
+          </div>
+        </section>
+
+        <section className="about-row about-profile" aria-labelledby="about-profile-title">
+          <h2 id="about-profile-title">
+            <span aria-hidden="true" />
+            自我介绍
+            <em>Profile</em>
+          </h2>
+          <div className="about-copy">
+            <p>拥有两年半平面设计经验，包含品牌视觉运营、UI界面设计、活动主视觉KV及线下物料、原创IP形象体系搭建、文创产品。承接空间平面类视觉落地设计，包含导视设计、空间导览地图、企业文化墙等关于平面类的设计。品牌商务PPT设计。精通多类AI生成工具，拥有自己AIGC工作流，赋能设计全流程，将AI能力融入创意构思、效果生成、细节优化全设计链路，提高作品完整性。</p>
+            <p>设计是热爱，做到充满热爱。</p>
+          </div>
+        </section>
+
+        <section className="about-row about-work" aria-labelledby="about-work-title">
+          <h2 id="about-work-title">
+            <span aria-hidden="true" />
+            工作经历
+            <em>Work</em>
+          </h2>
+          <div className="about-copy about-work-copy">
+            <p>落地13场全类型活动视觉设计，涵盖动漫主题活动、生活节、品牌推介会、企业年会；完成活动主视觉KV及配套线下线上物料设计。把控主KV核心视觉调性，统一全系列物料视觉体系，解决物料视觉脱节、宣传辨识度不足等问题。</p>
+            <p>完成4套IP设计工作，包含全新原创IP打造与存量IP形象迭代升级；规范IP全套视觉延展体系，解决品牌形象辨识度弱、旧IP形象老化、衍生应用适配性差、周边落地视觉不统一等痛点，塑造适配多场景传播的专属品牌卡通形象。</p>
+            <p>拥有15套UI设计的项目经验，覆盖APP、小程序、网页、平板多终端。针对B端优化信息层级，解决后台数据繁杂、操作路径冗长问题，提升运营办公效率；优化C端页面动线，降低用户理解成本，解决普通用户上手门槛高、流失率大问题。</p>
+            <p>完成7套品牌方案排版设计工作，涵盖品牌推介会、品牌服务介绍、品牌整体介绍等多元场景。梳理图文层级与视觉排版逻辑，解决方案内容杂乱、信息层级模糊、品牌展示调性不统一、商务呈现质感不足等问题，提升品牌宣讲与对外推介的专业度与说服力。</p>
+          </div>
+        </section>
+
+        <section className="about-row about-projects" aria-labelledby="about-projects-title">
+          <h2 id="about-projects-title">
+            <span aria-hidden="true" />
+            项目经历
+            <em>Project</em>
+          </h2>
+          <div className="about-copy about-project-list">
+            <p><time dateTime="2024-07">2024.07</time><span>参与原创字库设计，产出字体《摇醒青年黑》，该字体现已开放免费商用授权，具备成熟落地应用价值。</span></p>
+            <p><time dateTime="2025-12">2025.12</time><span>参与极氪线下门店新春全案项目，参与活动新春主题门店落地平面物料设计，兼顾汽车高端品牌调性与新春节日氛围感。</span></p>
+          </div>
+        </section>
+      </div>
+    </main>
+  )
+}
+
 export default function App() {
   const [activeCategory, setActiveCategory] = useState(getCategoryFromHash)
   const [navOpen, setNavOpen] = useState(false)
@@ -620,15 +680,18 @@ export default function App() {
       root.style.scrollBehavior = previousScrollBehavior
     })
     setIntroOpen(false)
-    document.title = projectDetails[view]
-      ? `${projectDetails[view].title} — LAYEE by Design`
-      : 'LAYEE by Design'
+    document.title = view === 'about'
+      ? 'About — LAYEE by Design'
+      : projectDetails[view]
+        ? `${projectDetails[view].title} — LAYEE by Design`
+        : 'LAYEE by Design'
 
     return () => window.cancelAnimationFrame(restoreScrollBehavior)
   }, [view])
 
   const detailProject = projectDetails[view]
   const isDetailView = Boolean(detailProject)
+  const isAboutView = view === 'about'
   const relatedWorks = detailProject
     ? projects.filter((project) => project.title !== detailProject.title).slice(0, 4)
     : []
@@ -654,7 +717,7 @@ export default function App() {
 
   return (
     <>
-      {!isDetailView && <div className="page-ruler" aria-hidden="true" />}
+      {!isDetailView && <div className={`page-ruler ${isAboutView ? 'about-ruler' : ''}`} aria-hidden="true" />}
       <header className="site-header">
         <div className="top-nav">
           <a className="wordmark" href="#top" onClick={showAllProjects}>LAYEE <span>By Design</span></a>
@@ -667,9 +730,9 @@ export default function App() {
               <span className="nav-en">project</span>
               <span className="nav-zh">项目</span>
             </a>
-            <a className="bilingual-link" href="mailto:?subject=Project inquiry">
-              <span className="nav-en">contact</span>
-              <span className="nav-zh">联系</span>
+            <a className="bilingual-link" href="#/about">
+              <span className="nav-en">about</span>
+              <span className="nav-zh">关于</span>
             </a>
           </nav>
         </div>
@@ -772,6 +835,8 @@ export default function App() {
             </div>
           </footer>
         </main>
+      ) : isAboutView ? (
+        <AboutView />
       ) : (
         <main id="top">
           <section className="project-section" id="project" aria-label="项目列表">
