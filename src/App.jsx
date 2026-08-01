@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const categories = ['品牌设计', 'UI设计', 'IP设计', '活动市集', '文创周边', '其他']
 
@@ -664,6 +664,7 @@ export default function App() {
   const [navOpen, setNavOpen] = useState(false)
   const [introOpen, setIntroOpen] = useState(false)
   const [view, setView] = useState(getCurrentView)
+  const projectListPosition = useRef(null)
   const visibleProjects = activeCategory
     ? projects.filter((project) => project.category === activeCategory)
     : projects.filter((project) => !project.secondaryOnly)
@@ -672,22 +673,39 @@ export default function App() {
     setActiveCategory(null)
   }
 
+  const rememberProjectListPosition = () => {
+    projectListPosition.current = {
+      hash: window.location.hash,
+      scrollY: window.scrollY,
+    }
+  }
+
   useEffect(() => {
+    const previousScrollRestoration = window.history.scrollRestoration
+    window.history.scrollRestoration = 'manual'
+
     const handleHashChange = () => {
       setView(getCurrentView())
       setActiveCategory(getCategoryFromHash())
     }
 
     window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
+    return () => {
+      window.history.scrollRestoration = previousScrollRestoration
+      window.removeEventListener('hashchange', handleHashChange)
+    }
   }, [])
 
   useEffect(() => {
     const root = document.documentElement
     const previousScrollBehavior = root.style.scrollBehavior
+    const savedPosition = view === 'home' && projectListPosition.current?.hash === window.location.hash
+      ? projectListPosition.current.scrollY
+      : 0
     root.style.scrollBehavior = 'auto'
-    window.scrollTo({ top: 0, left: 0 })
+    window.scrollTo({ top: savedPosition, left: 0 })
     const restoreScrollBehavior = window.requestAnimationFrame(() => {
+      window.scrollTo({ top: savedPosition, left: 0 })
       root.style.scrollBehavior = previousScrollBehavior
     })
     setIntroOpen(false)
@@ -874,7 +892,12 @@ export default function App() {
                       key={project.title}
                     >
                       {project.href ? (
-                        <a className="project-entry" href={project.href} aria-label={`查看${project.title}完整项目`}>
+                        <a
+                          className="project-entry"
+                          href={project.href}
+                          onClick={rememberProjectListPosition}
+                          aria-label={`查看${project.title}完整项目`}
+                        >
                           <div className="project-image">
                             {image}
                           </div>
