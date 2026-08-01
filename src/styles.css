@@ -297,7 +297,7 @@ button {
   min-height: 0;
   height: auto;
   aspect-ratio: 8000 / 12592;
-  background: url("/images/homepage-background.jpg") center top / 100% 100% no-repeat;
+  background: url("/optimized/images/homepage-background.webp") center top / 100% 100% no-repeat;
 }
 
 .home-project-layer {

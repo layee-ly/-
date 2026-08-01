@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 const categories = ['品牌设计', 'UI设计', 'IP设计', '活动市集', '文创周边', '其他']
 
+const optimizedImagePath = (source) => `/optimized${source.replace(/\.(?:jpe?g|png)$/i, '.webp')}`
+
 const projects = [
   {
     title: 'PICPALS 匹克球',
@@ -571,12 +573,14 @@ const assetVersion = '20260721-31'
           style={{ aspectRatio: `${page.width} / ${page.height}` }}
         >
           <img
-            src={`${page.src}?v=${assetVersion}`}
+            src={`${optimizedImagePath(page.src)}?v=${assetVersion}`}
             alt={`${project.title}项目第 ${index + 1} 页`}
             decoding="async"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            fetchPriority={index === 0 ? 'high' : 'auto'}
             width={page.width}
             height={page.height}
-            onError={(event) => retryImage(event, page.src)}
+            onError={(event) => retryImage(event, optimizedImagePath(page.src))}
           />
         </figure>
       ))}
@@ -743,7 +747,7 @@ export default function App() {
                     onClick={project.href ? undefined : showAllProjects}
                   >
                     <div className="related-work-image">
-                      <img src={project.image} alt={`${project.title}项目主图`} loading="lazy" />
+                      <img src={optimizedImagePath(project.image)} alt={`${project.title}项目主图`} loading="lazy" />
                     </div>
                     <p>{project.title}</p>
                   </a>
@@ -784,10 +788,12 @@ export default function App() {
                 {(activeCategory ? visibleProjects : [...visibleProjects, ...homeContinuationProjects]).map((project, index) => {
                   const image = (
                     <img
-                      src={project.image}
+                      src={optimizedImagePath(project.image)}
                       alt={`${project.title}项目主图`}
                       style={{ objectPosition: project.homePosition || project.position }}
-                      loading={index > 2 ? 'lazy' : 'eager'}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                      fetchPriority={index === 0 ? 'high' : 'auto'}
                     />
                   )
 
