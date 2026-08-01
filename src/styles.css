@@ -17,7 +17,14 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+*,
+*::before,
+*::after {
+  animation: none !important;
+  transition: none !important;
 }
 
 body {
@@ -463,7 +470,7 @@ button {
 }
 
 .project-card:hover img {
-  transform: scale(1.025);
+  transform: none;
 }
 
 .home-project-repair {
@@ -741,7 +748,7 @@ button {
 
 .related-work-card a:hover img,
 .related-work-card a:focus-visible img {
-  transform: scale(1.025);
+  transform: none;
 }
 
 .related-work-card p {

@@ -20,9 +20,13 @@ def output_path(source: Path) -> Path:
 
 
 def resize_for_web(image: Image.Image, source: Path) -> Image.Image:
+    if source == PUBLIC / "images" / "homepage-background.jpg":
+        max_width = 4400
+        scale = min(1, max_width / image.width)
     if source.is_relative_to(PUBLIC / "images"):
-        max_dimension = 2400
-        scale = min(1, max_dimension / max(image.size))
+        if source != PUBLIC / "images" / "homepage-background.jpg":
+            max_dimension = 2400
+            scale = min(1, max_dimension / max(image.size))
     else:
         max_width = 2800
         scale = min(1, max_width / image.width)
@@ -44,8 +48,11 @@ def optimize(source: Path) -> tuple[int, int]:
         if image.mode not in {"RGB", "RGBA"}:
             image = image.convert("RGBA" if "transparency" in image.info else "RGB")
 
-        quality = 88 if source.is_relative_to(PUBLIC / "images") else 90
-        image.save(target, "WEBP", quality=quality, method=4)
+        if source == PUBLIC / "images" / "homepage-background.jpg":
+            image.save(target, "WEBP", lossless=True, method=6)
+        else:
+            quality = 88 if source.is_relative_to(PUBLIC / "images") else 90
+            image.save(target, "WEBP", quality=quality, method=4)
 
     return source.stat().st_size, target.stat().st_size
 
