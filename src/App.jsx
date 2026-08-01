@@ -592,7 +592,18 @@ const assetVersion = '20260721-31'
 function AboutView() {
   return (
     <main className="about-view" id="top">
-      <div className="about-content">
+      <img
+        className="about-artwork"
+        src="/optimized/images/about-page.jpg"
+        alt=""
+        aria-hidden="true"
+        width="11999"
+        height="6444"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
+      />
+      <div className="about-accessible-copy">
         <section className="about-row about-contact" aria-labelledby="about-contact-title">
           <h1 id="about-contact-title">
             <span aria-hidden="true" />
@@ -717,7 +728,6 @@ export default function App() {
 
   return (
     <>
-      {!isDetailView && <div className={`page-ruler ${isAboutView ? 'about-ruler' : ''}`} aria-hidden="true" />}
       <header className="site-header">
         <div className="top-nav">
           <a className="wordmark" href="#top" onClick={showAllProjects}>LAYEE <span>By Design</span></a>
@@ -839,15 +849,11 @@ export default function App() {
         <AboutView />
       ) : (
         <main id="top">
-          <section className="project-section" id="project" aria-label="项目列表">
-            {activeCategory && (
-              <div className="moodboard-graphics" aria-hidden="true">
-                <div className="hero-rule hero-rule-b" />
-                <div className="hero-circle hero-circle-a" />
-                <div className="hero-circle hero-circle-b" />
-              </div>
-            )}
-
+          <section
+            className={`project-section ${activeCategory ? 'project-section-filtered' : 'project-section-home'} ${activeCategory === '品牌设计' ? 'project-section-brand' : ''}`}
+            id="project"
+            aria-label="项目列表"
+          >
             <div className={`project-canvas ${activeCategory ? 'filtered' : ''}`}>
               <div className={activeCategory ? 'project-grid-contents' : 'home-project-layer'}>
                 {(activeCategory ? visibleProjects : [...visibleProjects, ...homeContinuationProjects]).map((project, index) => {
