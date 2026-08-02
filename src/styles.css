@@ -797,6 +797,25 @@ button {
 }
 
 @media (max-width: 760px) {
+  .site-header {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .top-nav,
+  .category-nav {
+    background: rgba(248, 248, 246, 0.94);
+    box-shadow: 0 4px 18px rgba(11, 79, 70, 0.04);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .project-section-filtered,
+  .project-canvas:not(.filtered) {
+    background-image: url("/optimized/images/site-background-03-mobile.jpg");
+  }
+
   .project-canvas.filtered {
     grid-template-columns: 1fr;
     gap: 44px;

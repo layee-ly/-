@@ -592,17 +592,23 @@ const assetVersion = '20260721-31'
 function AboutView() {
   return (
     <main className="about-view" id="top">
-      <img
-        className="about-artwork"
-        src="/optimized/images/about-page.jpg"
-        alt=""
-        aria-hidden="true"
-        width="11999"
-        height="6444"
-        loading="eager"
-        decoding="async"
-        fetchPriority="high"
-      />
+      <picture>
+        <source
+          media="(max-width: 760px)"
+          srcSet="/optimized/images/about-page-mobile.jpg"
+        />
+        <img
+          className="about-artwork"
+          src="/optimized/images/about-page.jpg"
+          alt=""
+          aria-hidden="true"
+          width="11999"
+          height="6444"
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
+        />
+      </picture>
       <div className="about-accessible-copy">
         <section className="about-row about-contact" aria-labelledby="about-contact-title">
           <h1 id="about-contact-title">
